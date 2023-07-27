@@ -40,7 +40,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "imdisable-rs"
+name = "imdisable"
 version = "0.1.0"
 dependencies = [
  "anyhow",
