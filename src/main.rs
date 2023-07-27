@@ -13,6 +13,9 @@ fn main() {
     loop {
         let keys = device_state.get_keys();
         if keys.contains(&LControl) && keys.contains(&LeftBracket) {
+            #[cfg(debug_assertions)]
+            dbg!(&keys);
+
             imdisable().ok();
             thread::sleep(Duration::from_millis(500));
         }
@@ -29,7 +32,9 @@ fn imdisable() -> anyhow::Result<()> {
             WPARAM(IMC_SETOPENSTATUS as usize),
             LPARAM(0),
         );
-        // dbg!(&res);
+
+        #[cfg(debug_assertions)]
+        dbg!(&_res);
     }
     Ok(())
 }
