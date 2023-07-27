@@ -29,7 +29,7 @@ fn imdisable() -> anyhow::Result<()> {
             WPARAM(IMC_SETOPENSTATUS as usize),
             LPARAM(0),
         );
-        dbg!(&res);
+        // dbg!(&res);
     }
     Ok(())
 }
