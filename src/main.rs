@@ -3,7 +3,7 @@ use std::{thread, time::Duration};
 use windows::Win32::{
     Foundation::{LPARAM, WPARAM},
     UI::{
-        Input::Ime::{ImmDisableIME, ImmGetDefaultIMEWnd, IMC_SETOPENSTATUS},
+        Input::Ime::{ImmGetDefaultIMEWnd, IMC_SETOPENSTATUS},
         WindowsAndMessaging::{GetForegroundWindow, SendMessageA, WM_IME_CONTROL},
     },
 };
@@ -23,7 +23,7 @@ fn imdisable() -> anyhow::Result<()> {
     unsafe {
         let fw = GetForegroundWindow();
         let ime = ImmGetDefaultIMEWnd(fw);
-        let res = SendMessageA(
+        let _res = SendMessageA(
             ime,
             WM_IME_CONTROL,
             WPARAM(IMC_SETOPENSTATUS as usize),
