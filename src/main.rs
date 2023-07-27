@@ -1,3 +1,5 @@
+#![windows_subsystem = "windows"]
+
 use device_query::{DeviceQuery, DeviceState, Keycode::LControl, Keycode::LeftBracket};
 use std::{thread, time::Duration};
 use windows::Win32::{
