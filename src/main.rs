@@ -10,6 +10,7 @@ use windows::Win32::{
     },
 };
 
+#[cfg(windows)]
 fn main() {
     let device_state = DeviceState::new();
     loop {
@@ -33,4 +34,9 @@ fn imdisable() -> anyhow::Result<()> {
         );
     }
     Ok(())
+}
+
+#[cfg(not(windows))]
+fn main() {
+    panic!("This program is only intended to run on Windows.");
 }
