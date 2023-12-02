@@ -1,7 +1,22 @@
 #![windows_subsystem = "windows"]
 
-use device_query::{DeviceQuery, DeviceState, Keycode::LControl, Keycode::LeftBracket};
+use device_query::{
+    DeviceQuery, DeviceState, Keycode::CapsLock, Keycode::LControl, Keycode::LeftBracket,
+};
 use std::{thread, time::Duration};
+
+fn main() {
+    let device_state = DeviceState::new();
+    loop {
+        let keys = device_state.get_keys();
+        if (keys.contains(&LControl) || keys.contains(&CapsLock)) && keys.contains(&LeftBracket) {
+            imdisable().ok();
+        }
+        thread::sleep(Duration::from_millis(50));
+    }
+}
+
+#[cfg(windows)]
 use windows::Win32::{
     Foundation::{LPARAM, WPARAM},
     UI::{
@@ -11,17 +26,6 @@ use windows::Win32::{
 };
 
 #[cfg(windows)]
-fn main() {
-    let device_state = DeviceState::new();
-    loop {
-        let keys = device_state.get_keys();
-        if keys.contains(&LControl) && keys.contains(&LeftBracket) {
-            imdisable().ok();
-        }
-        thread::sleep(Duration::from_millis(50));
-    }
-}
-
 fn imdisable() -> anyhow::Result<()> {
     unsafe {
         let fw = GetForegroundWindow();
@@ -36,7 +40,10 @@ fn imdisable() -> anyhow::Result<()> {
     Ok(())
 }
 
+use std::process::Command;
+
 #[cfg(not(windows))]
-fn main() {
-    panic!("This program is only intended to run on Windows.");
+fn imdisable() -> anyhow::Result<()> {
+    Command::new("fcitx5-remote").arg("-c").spawn().ok();
+    Ok(())
 }
