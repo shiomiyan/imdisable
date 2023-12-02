@@ -8,9 +8,40 @@ Vimキーバインドで`C-[`したあとにｊｊｊｊｊｊｊｊｊとなる
 
 ## Install
 
+### Windows
+
 ```shell
-# Windows only
 cargo install imdisable
 ```
 
 `~/.cargo/bin/imdisable.exe`をタスクスケジューラあたりに登録しておく。
+
+### Linux
+
+`fcitx5-remote` command required.
+
+```shell
+cargo install imdisable
+sudo ln -sf $HOME/.cargo/bin/imdisable /usr/bin/imdisable
+```
+
+And add to systemd.
+
+```systemd
+[Unit]
+Description=imdisable
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/imdisable &
+Restart=on-failure
+StartLimitInterval=3
+StartLimitBurst=100
+
+[Install]
+WantedBy=default.target
+```
+
+```shell
+systemctl --user enable imdisable.service
+```
