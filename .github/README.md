@@ -25,7 +25,7 @@ cargo install imdisable
 sudo ln -sf $HOME/.cargo/bin/imdisable /usr/bin/imdisable
 ```
 
-And add to systemd.
+Run as user service (`~/.config/systemd/user/imdisable.service`).
 
 ```systemd
 [Unit]
